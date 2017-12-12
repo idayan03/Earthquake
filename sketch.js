@@ -10,18 +10,13 @@ var zoom = 1;
 var earthquakes;
 
 function preload() {
-  mapimg = loadImage('https://api.mapbox.com/styles/v1/mapbox/dark-v8/static/' +
-    clon + ',' + clat + ',' + zoom + '/' +
-    w + 'x' + h +
-    '?access_token=pk.eyJ1IjoiaWRheWFuMDMiLCJhIjoiY2phb2ZpOWdnM2w3MDMzbzJiZGxuZXZ3cSJ9.rn3lA31E4Wcm_WinTv9NhQ');
+  mapimg = loadImage('https://api.mapbox.com/styles/v1/mapbox/dark-v8/static/0,0,1/1024x512?access_token=pk.eyJ1IjoiaWRheWFuMDMiLCJhIjoiY2phb2ZpOWdnM2w3MDMzbzJiZGxuZXZ3cSJ9.rn3lA31E4Wcm_WinTv9NhQ');
   earthquakes = loadStrings('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv');
 }
 
 function mercX(lon) {
   lon = radians(lon);
-  var a = (256 / PI) * pow(2, zoom);
-  var b = lon + PI;
-  return a * b;
+  return ((256 / PI) * pow(2, zoom)) * (lon + PI);
 }
 
 function mercY(lat) {
@@ -55,7 +50,6 @@ function setup() {
       x -= width;
     }
     mag = pow(10, mag);
-    mag = sqrt(mag);
     var magmax = sqrt(pow(10, 10));
     var d = map(mag, 0, magmax, 0, 180);
     stroke(255, 0, 0);
